@@ -1,14 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page import="java.io.*, java.util.*, java.net.*" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=BIG5">
-<title>Insert title here</title>
+<title>Auto Refresh Header Example</title>
 </head>
 <body>
-<%=
-"hello world"
+<center>
+<h2>Auto Refresh Header Example</h2>
+<%
+	try{
+ 		Socket socket = new Socket("127.0.0.1",4327);
+ 		InputStream inSocket = socket.getInputStream();
+        OutputStream outSocket = socket.getOutputStream();
+        int character;
+        String str = "{\"method\":\"getinfo\",\"params\":[],\"id\":1,\"chain_name\":\"chain1\"}";
+        byte buffer[] = str.getBytes();
+        outSocket.write(buffer);
+
+        while ((character = inSocket.read()) != -1) {
+            out.println((char)character);
+        }
+        socket.close();
+ 	}catch(Exception e){
+ 
+ 	}
 %>
+</center>
 </body>
 </html>
